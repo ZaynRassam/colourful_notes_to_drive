@@ -1,5 +1,5 @@
 client_secrets.json
 .idea/
 test.py
-**/__pycache__/
+/pycache/*
 folder_id_cache.json
