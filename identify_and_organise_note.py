@@ -3,25 +3,25 @@ from utils.google_drive_connect import *
 import sys
 
 if __name__ == "__main__":
-    upload_to_drive = False
-
+    project_root = os.path.abspath(os.curdir)
+    image_name = "blank_note.jpg"
     if len(sys.argv) > 1:
         image_name = str(sys.argv[1])
-    else:
-        image_name = "blank_note.jpg"
     print(f"Assessing file {image_name}")
 
+    upload_to_drive = True
     if len(sys.argv) > 2:
-        upload_to_drive = sys.argv[2]
+        upload_to_drive = sys.argv[2].lower() == "true" if len(sys.argv) > 2 else False
     print(f"Uploading to Google Drive: {str(upload_to_drive)}")
 
-    image_path = get_images_folder_path(image_name)
+    image_path = get_images_folder_path(image_name, project_root)
     image = load_and_scale_image(image_path, scale_factor=0.2)
 
-    colours = ["pink", "green", "yellow"]
+    colour_refs = get_colour_ref_names(project_root)
     values_dict = {}
     range_constant = 40
-    for colour in colours:
+    for colour in colour_refs:
+        colour = colour.rsplit(".", 1)[0]
         mean_r, mean_g, mean_b = mean_pixel_values(colour)
         values_dict[colour] = ((max(mean_r-range_constant, 0), max(mean_g-range_constant, 0), max(mean_b - range_constant, 0)),
                                (min(mean_r+range_constant, 255), min(mean_g+range_constant, 255), min(mean_b + range_constant, 255)))
@@ -39,7 +39,8 @@ if __name__ == "__main__":
         if note_colour != None:
             note_colours.append(note_colour)
 
-    google_drive_connection = set_up_connection()
+    if upload_to_drive:
+        google_drive_connection = set_up_connection()
     # parent_folder_id = get_folder_id(google_drive_connection, "colourful_notes")
     if len(note_colours) != 0:
         print(f"This note belongs to the: {' and '.join(note_colours)} folder(s).")

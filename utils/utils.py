@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 import os
 
-def get_images_folder_path(image_name):
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def get_images_folder_path(image_name, project_root):
     image_path = os.path.join(project_root, "notes", image_name)
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"Image '{image_name}' not found at {image_path}")
@@ -15,6 +14,11 @@ def load_and_scale_image(image_path, scale_factor=1):
 
     scaled_image = cv2.resize(image, (0, 0), fx=scale_factor, fy=scale_factor)
     return scaled_image
+
+def get_colour_ref_names(project_root):
+    colour_ref_path = os.path.join(project_root, "colour_refs")
+    return os.listdir(colour_ref_path)
+
 
 def mean_pixel_values(colour):
     reference = cv2.imread(f"colour_refs/{colour}.png")

@@ -14,7 +14,6 @@ def get_folder_id(google_drive_connection, colour):
         if folder['title'] == folder_name:
             print("folder title: ", folder['title'])
             print("folder id: ", folder['id'])
-
             return folder['id']
 
 def upload_file_to_folder(image_name, google_drive_connection, folder_id):
