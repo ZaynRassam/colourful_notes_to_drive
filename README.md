@@ -15,3 +15,8 @@ The folder ```colour_refs``` should include PNG files of the sticky notes that a
 Cache is used to retieve Google Drive folder IDs. For this to work create a ```folder_id_cache.json``` file in the root directory and insert an empty dictionary, i.e. ```{}```. Cacheing folder IDs took the time to retrieve the IDs from ~2-10 seconds to be instanateous when ID is already known. If a folder is created in Google Drive with the same name as the previous folder, if previous folder ID has already been cached, new images will be sent to this folder, otherwise, they will be sent to the newest created folder.
 
 A ```client_secrets.json``` file must be present in the root directory of the project. This is acquired by following the instructions of this webpage: https://docs.iterative.ai/PyDrive2/quickstart/#authentication
+
+An image can have multiple sticky notes, this will send the image to multiple folders automatically:    
+![Screenshot 2025-03-21 at 08 40 45](https://github.com/user-attachments/assets/70db2a98-3950-4919-b17e-f4e959aed9b1)   
+
+![Screenshot 2025-03-21 at 08 42 37](https://github.com/user-attachments/assets/9bc0ec78-12b5-481b-9684-1a4876798caf)
